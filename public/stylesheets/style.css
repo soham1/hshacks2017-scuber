@@ -1,0 +1,33 @@
+html,
+body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.login-form {
+    width: 280px;
+}
+
+.margin {
+    margin: 0 !important;
+}
+
+.profile-image-login {
+    width: 100px;
+    height: 100px !important;
+}
+
+.medium-small {
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+}
