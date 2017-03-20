@@ -3,14 +3,18 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var useragent = require('useragent');
 var index = require('./routes/index');
 var mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/uberSchool");
 
 var app = express();
+
+var SECRET = "This is the world's most secure secret!";
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,7 +25,11 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(SECRET));
+app.use(session({
+  secret: SECRET,
+  saveUninitialized: false,
+}))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/node_modules', express.static(__dirname + '/node_modules/'));
 
@@ -54,5 +62,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+require('./addSeedData').add();
 
 module.exports = app;
