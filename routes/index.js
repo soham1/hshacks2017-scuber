@@ -140,8 +140,6 @@ router.post('/login', function(req, res, next) {
   User.findOne({
     username: req.body.username
   }, function(err, user) {
-    console.log("given pw: " + req.body.password);
-    console.log("actual pw: " + user.password);
     if (err) {
       res.redirect('/');
     }
