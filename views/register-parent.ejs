@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
   <% include ../partials/head %>
+  <link href="/stylesheets/login.css" type="text/css" rel="stylesheet">
   <body class="cyan">
     <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
-      <form class="login-form" method="POST" action="/register">
+      <form class="login-form" method="POST" action="/register-parent">
         <div class="row">
           <div class="input-field col s12 center">
             <img src="http://demo.geekslabs.com/materialize-v1.0/images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login">
-            <p class="center login-form-text">Register</p>
+            <p class="center login-form-text">Register Parent</p>
           </div>
         </div>
         <div class="row margin">
@@ -35,8 +36,8 @@
         <div class="row margin">
           <div class="input-field col s12">
             <i class="material-icons prefix">account_balance</i>
-            <input id="schoolName" name="schoolName" value="s" type="text" class="validate">
-            <label for="schoolName">School Name</label>          
+            <input id="carPhoto" name="carPhoto" value="s" type="text" class="validate">
+            <label for="carPhoto">Car Photo</label>          
           </div>
         </div>
         <div class="row margin">
@@ -58,6 +59,30 @@
             <i class="material-icons prefix">account_circle</i>
             <input id="phone" name="phone" type="tel" value="1" class="validate">
             <label for="phone">Phone</label>          
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">link</i>
+            <input id="carMakeModel" name="carMakeModel" value="s" type="text" class="validate">
+            <label for="carMakeModel">Car Make and Model</label>          
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">link</i>
+            <input id="licensePlate" name="licensePlate" value="s" type="text" class="validate">
+            <label for="licensePlate">Car License Plate</label>          
+          </div>
+        </div>
+        <div class= "row margin">
+          <div class="input-field col s12">
+            <select name="relation">
+              <option value="" disabled selected>Relation to you?</option>
+              <option value="father">Father</option>
+              <option value="mother">Mother</option>
+            </select>
+            <label>Relation</label>
           </div>
         </div>
         <div class="row">

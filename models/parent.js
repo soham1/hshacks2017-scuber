@@ -7,7 +7,6 @@ var Parent = new Schema({
    userId: {type: Schema.Types.ObjectId, ref: 'User'},
    name: String,
    miles: Number,
-   carImage: String,
    carMakeModel: String,
    carPhoto: String,
    phone: Number,

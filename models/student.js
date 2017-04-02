@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var Student = new Schema({
    userId: {type: Schema.Types.ObjectId, ref: 'User'},
    phone: Number,
-   schoolId: {type: Schema.Types.ObjectId, ref: 'School'},
+   schoolName: String,
    name: String,
    fatherId: {type: Schema.Types.ObjectId, ref: 'Parent'},
    motherId: {type: Schema.Types.ObjectId, ref: 'Parent'},

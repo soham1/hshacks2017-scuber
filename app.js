@@ -63,6 +63,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-require('./addSeedData').add();
+// require('./automation.js').add();
 
 module.exports = app;
