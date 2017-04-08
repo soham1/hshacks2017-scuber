@@ -18,6 +18,8 @@
     "mongoose": "^4.8.6",
     "morgan": "~1.7.0",
     "pushpad": "^0.3.1",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0",
     "serve-favicon": "~2.3.2",
     "useragent": "^2.1.12"
   }

@@ -1,0 +1,26 @@
+    <link href="/stylesheets/nav-s.css" type="text/css" rel="stylesheet">
+    <ul id="slide-out" class="side-nav fixed">
+      <li>
+        <div class="userView">
+          <div class="background">
+            <img src="http://materializecss.com/images/office.jpg">
+          </div>
+          <a href="#!user"><img class="circle" src="<%= parent.photo %>"></a>
+          <a href="#!name">
+            <span class="white-text name">
+              <%= parent.name %>
+            </span>
+          </a>
+          <a href="#!email">
+            <span class="white-text email">
+              <%= parent.email %>
+            </span>
+          </a>
+          <a href="#!miles">
+            <span class="white-text miles">
+              Miles: <%= parent.miles %>
+            </span>
+          </a>
+        </div>
+      </li>
+    </ul>

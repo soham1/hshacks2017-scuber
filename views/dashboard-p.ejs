@@ -1,1 +1,29 @@
-<a href="<%= project.pathFor(user._id) %>">Push notifs!</a>
+<html>
+  <% include ../partials/head %>
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a href="#" data-activates="slide-out" class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only">
+              <i class="material-icons" style="line-height: 76px">menu</i>
+            </a>
+            <a class="page-title">Dashboard</a>
+          </div>
+        </div>
+      </nav>
+    </header>  
+    <div class="row container">
+
+      <div class="col s3">
+        <% include ../partials/nav-p %>
+      </div>
+      
+      <a class="waves-effect waves-light btn pulse" href="/available">Available</a>
+
+    </div>
+
+    <% include ../partials/footer %>  
+  </body>
+</html>  
+  

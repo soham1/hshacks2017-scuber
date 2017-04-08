@@ -18,9 +18,14 @@ module.exports = {
 // are also actually closer
 // Haversine formula used
 function atHome(student) {
-  var current = [student.latitude, student.longitude];
-  var school  = coordsOfPlace(student.schoolName);
-  var home    = coordsOfPlace(student.address);
+  var current  = [student.latitude, student.longitude];
+  var school   = coordsOfPlace(student.schoolName);
+  var home     = coordsOfPlace(student.address);
+  
+  var toHome   = haversine(current, home);
+  var toSchool = haversine(current, school);
+  
+  return toHome < toSchool ? true : false;
   
 }
 
@@ -50,7 +55,7 @@ function haversine(p1, p2) {
 }
 
 function deg2rad(deg) {
-  return deg * (Math.PI/180)
+  return deg * (Math.PI/180);
 }
 
 // Using Places API

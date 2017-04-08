@@ -26,7 +26,11 @@
               <div class="card-image">
                 <img src="https://d13yacurqjgara.cloudfront.net/users/52627/screenshots/1664729/dribbble800x600_1x.png">
                 <span class="card-title black-text">Call A Car</span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red pulse"><i class="material-icons">rss_feed</i></a>
+                <form id="findMeForm" method="POST" action="/confirmRide">
+                  <input type="hidden" id="currLong" name="currLong"></input>
+                  <input type="hidden" id="currLat" name="currLat"></input>
+                  <a class="btn-floating halfway-fab waves-effect waves-light red submitBtn"><i class="material-icons">rss_feed</i></a>
+                </form>
               </div>
               <div class="card-content">
                 <p>Get a ride to either your home or your school.</p>

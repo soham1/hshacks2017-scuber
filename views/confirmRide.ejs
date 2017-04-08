@@ -1,0 +1,21 @@
+<html>
+  <% include ../partials/head %>
+  <body>
+    <div class="container">
+      <form class="changeAddress" method="POST" action="/updateDestination">
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="newDestination" name="newDestination" type="text" class="validate">
+            <label for=""newDestination"">New Destination</label>
+          </div>
+          <div class ="col s6">
+             <button class="btn waves-effect waves-light pulse" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+             </button>
+          </div>
+        </div>
+      </form>
+      <% include ../partials/footer %>
+    </div>
+  </body>
+</html>

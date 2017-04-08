@@ -1,0 +1,7 @@
+Google Maps Geo Location API: AIzaSyAidWCwYHUCJC7tdQkc5Pn59MQsPvh-SOU
+
+Google Maps Embed API: AIzaSyBsYTznwuRzw_WDYPMDrTYqiongJMo4--M
+
+Google Maps GeoCoding API: AIzaSyDdlNYvhqPXvCEOClkJe2vPZCnPBnmFfXw
+
+(haversine already implemented in routing.js)

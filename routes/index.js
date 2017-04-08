@@ -4,6 +4,26 @@ var mongoose = require('mongoose');
 var User = require("../models/user.js");
 var Parent = require("../models/parent.js");
 var Student = require("../models/student.js");
+var rp = require('request-promise');
+
+//Haversine Formula
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2 - lat1); // deg2rad below
+  var dLon = deg2rad(lon2 - lon1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c; // Distance in km
+  return d;
+}
+
+//Degrees to Radians
+function deg2rad(deg) {
+  return deg * (Math.PI / 180)
+}
 
 // TODO: this isn't really required, either because you could move the file contents of pushpad here, or because you could just insert the link in the template manually
 var pushpad = require("../dumpster/pushpad.js");
@@ -22,12 +42,31 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.get('/available', function(req, res, next) {
+    
+});
+
 router.get('/register', function(req, res, next) {
   res.render('register.ejs');
 });
 
 router.get('/register-parent', function(req, res, next) {
   res.render('register-parent.ejs');
+});
+
+router.post('/confirmRide', function(req, res, next) {
+  var currToSchool = getDistanceFromLatLonInKm(req.body.currLat, req.body.currLong, req.session.schoolLat, req.session.schoolLong);
+  var currToHome = getDistanceFromLatLonInKm(req.body.currLat, req.body.currLong, req.session.homeLat, req.session.homeLong);
+  var destination = "School";
+  if(currToSchool > currToHome) {
+    destination = "Home";
+  } 
+  console.log("DESTINATION", destination);
+  res.render('confirmRide.ejs', {destination: destination, student: req.session.student});
+});
+
+router.post('/updateDestination', function(req, res, next) {
+ //TODO: Logic for updating destination. Impact: Minor  
 });
 
 router.post('/register-parent', function(req, res, next) {
@@ -89,7 +128,7 @@ router.post('/register-parent', function(req, res, next) {
               }
             });
           }
-          res.redirect('/dashboard-s');
+          res.redirect('/dashboard');
         }
       });
     }
@@ -98,6 +137,10 @@ router.post('/register-parent', function(req, res, next) {
 
 // Students can only register parents in the dashboard*
 router.post('/register', function(req, res, next) {
+  var schoolLat;
+  var schoolLong;
+  var homeLat;
+  var homeLong;
   console.log("Inside register post");
   console.log("pw given: " + req.body.password);
   var user = new User({
@@ -112,24 +155,70 @@ router.post('/register', function(req, res, next) {
     }
     else {
       console.log("inside saving student");
-      var student = new Student({
-        userId: mongoose.Types.ObjectId(user._id.toString()),
-        phone: req.body.phone,
-        schoolName: req.body.schoolName,
-        photo: req.body.photo,
-        name: req.body.name,
-        email: req.body.email
-      });
 
-      student.save(function(err) {
-        if (err) {
-          console.log("ERROR", err);
-        }
-        else {
-          req.session.user = user;
-          res.redirect('/dashboard');
-        }
-      });
+      var schoolOptions = {
+        uri: 'https://maps.googleapis.com/maps/api/geocode/json',
+        qs: {
+          key: 'AIzaSyDdlNYvhqPXvCEOClkJe2vPZCnPBnmFfXw',
+          address: req.body.schoolAddress
+        },
+        headers: {
+          'User-Agent': 'Request-Promise'
+        },
+        json: true // Automatically parses the JSON string in the response
+      };
+
+      rp(schoolOptions)
+        .then(function(schoolAddress) {
+          schoolLat = schoolAddress.results[0].geometry.location.lat;
+          schoolLong = schoolAddress.results[0].geometry.location.lng;
+          console.log("SCHOOL", schoolLat, schoolLong);
+
+          var homeOptions = {
+            uri: 'https://maps.googleapis.com/maps/api/geocode/json',
+            qs: {
+              key: 'AIzaSyDdlNYvhqPXvCEOClkJe2vPZCnPBnmFfXw',
+              address: req.body.homeAddress
+            },
+            headers: {
+              'User-Agent': 'Request-Promise'
+            },
+            json: true // Automatically parses the JSON string in the response
+          };
+
+          rp(homeOptions)
+            .then(function(homeAddress) {
+              homeLat = homeAddress.results[0].geometry.location.lat;
+              homeLong = homeAddress.results[0].geometry.location.lng;
+              console.log("HOME", homeLat, homeLong);
+              var student = new Student({
+                userId: mongoose.Types.ObjectId(user._id.toString()),
+                phone: req.body.phone,
+                schoolName: req.body.schoolName,
+                photo: req.body.photo,
+                name: req.body.name,
+                email: req.body.email,
+                homeLong: homeLong,
+                homeLat: homeLat,
+                schoolLong: schoolLong,
+                schoolLat: schoolLat
+              });
+
+              student.save(function(err) {
+                if (err) {
+                  console.log("ERROR", err);
+                }
+                else {
+                  req.session.user = user;
+                  res.redirect('/dashboard');
+                }
+              });
+            }).catch(function(err) {
+              console.log("ERROR CALLING GOOGLE (HOME)", err.message);
+            });
+        }).catch(function(err) {
+          console.log("ERROR CALLING GOOGLE (SCHOOL)", err.message);
+        });
     }
   });
 });
@@ -188,6 +277,11 @@ router.get('/dashboard', function(req, res, next) {
       else {
         console.log("STUDENT", student);
         req.session.student = student;
+        req.session.homeLong = student.homeLong;
+        req.session.homeLat = student.homeLat;
+        req.session.schoolLong = student.schoolLong;
+        req.session.schoolLat = student.schoolLat;
+
         res.render('dashboard-s', {
           user: user,
           student: student,

@@ -11,11 +11,12 @@ var Student = new Schema({
    fatherId: {type: Schema.Types.ObjectId, ref: 'Parent'},
    motherId: {type: Schema.Types.ObjectId, ref: 'Parent'},
    photo: String,
-   address: String,
+   homeLong: Number,
+   homeLat: Number,
+   schoolLong: Number,
+   schoolLat: Number,
    email: String,
    waitingForRide: Boolean,
-   latitude: Number,
-   longitude: Number,
    miles: Number
 });
 

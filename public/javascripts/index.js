@@ -8,3 +8,16 @@ $('.button-collapse').sideNav(
 );
 
 $('select').material_select();
+
+$('.submitBtn').click(function () {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var latitude  = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      $("#currLong").val(longitude);
+      $("#currLat").val(latitude);
+      $("#findMeForm").submit();
+  }, function(error) {
+    console.log(error);
+  }); 
+});
+
