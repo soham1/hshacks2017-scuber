@@ -7,10 +7,14 @@ var TripRoute = new Schema({
    tripId: {type: Schema.Types.ObjectId, ref: 'Trip'},
    studentId: {type: Schema.Types.ObjectId, ref: 'Student'},
    stopOrder: Number,
-   address: String,
+   destination: String,
    latitude: Number,
    longitude: Number,
-   date: Date
+   isDone: Boolean,
+   distance: Number,
+   parentRating: Number,
+   studentRating: Number
+
 });
 
 module.exports = mongoose.model('TripRoute', TripRoute);

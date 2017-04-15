@@ -17,7 +17,8 @@ var Student = new Schema({
    schoolLat: Number,
    email: String,
    waitingForRide: Boolean,
-   miles: Number
+   destination: String,
+   miles: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model('Student', Student);

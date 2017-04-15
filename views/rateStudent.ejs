@@ -1,0 +1,26 @@
+<html>
+  <% include ../partials/head %>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <body class="container">
+    <div class="stars">
+      <form class="rateStudentForm" method="POST" action="/rateStudent">
+        <input type="hidden" name="tripRouteId" value="<%=tripRoute._id%>">
+        <input type="hidden" name="studentId" value="<%=student._id%>">
+        <input class="star star-5" id="star-5" value="5" type="radio" name="star"/>
+        <label class="star star-5" for="star-5"></label>
+        <input class="star star-4" id="star-4" value="4" type="radio" name="star"/>
+        <label class="star star-4" for="star-4"></label>
+        <input class="star star-3" id="star-3" value="3" type="radio" name="star"/>
+        <label class="star star-3" for="star-3"></label>
+        <input class="star star-2" id="star-2" value="2" type="radio" name="star"/>
+        <label class="star star-2" for="star-2"></label>
+        <input class="star star-1" id="star-1" value="1" type="radio" name="star"/>
+        <label class="star star-1" for="star-1"></label>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+    </div>
+    <% include ../partials/footer %>
+  </body>
+</html>

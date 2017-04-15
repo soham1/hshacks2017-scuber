@@ -7,8 +7,7 @@ var Trip = new Schema({
    tripDate: Date,
    parentId: {type: Schema.Types.ObjectId, ref: 'Parent'},
    totalDistance: Number,
-   parentRating: Number,
-   studentRating: Number
+   isDone: Boolean
 });
 
 module.exports = mongoose.model('Trip', Trip);

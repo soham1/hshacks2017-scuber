@@ -1,0 +1,26 @@
+<html>
+  <% include ../partials/head %>
+  <body class="container">
+    You will receive a push notification if there is an available parent.
+    <% include ../partials/footer %>
+  </body>
+  <script>
+    setTimeout(checkRideFound, 2000);
+    
+    function checkRideFound() {
+      $.ajax({
+        url: "/rideFound/<%=studentId%>"
+      }).done(function( data ) {
+        console.log("DATA",data);
+        if(data.found){
+          window.location.href="/rideDetails/" + data.tripId;
+        } else {
+          console.log("Pinging");
+          setTimeout(checkRideFound, 2000);
+        }
+      });
+    }
+  </script>
+</html>
+
+

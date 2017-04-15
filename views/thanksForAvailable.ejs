@@ -1,0 +1,13 @@
+<html>
+  <% include ../partials/head %>
+  <body class="container">
+    Thanks for being available. You will receive a push notification if there is a student requesting a ride.
+    <a class="waves-effect waves-light btn pulse" href="/notAvailable">Cancel Availability</a>
+    <% include ../partials/footer %>
+    <script>
+      var parentId = "<%=parentId%>";
+      var totalKids = 0;
+    </script>
+    <script src="/javascripts/checkStudentFound.js"></script>
+  </body>
+</html>

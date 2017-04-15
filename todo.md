@@ -1,15 +1,10 @@
 # Design doc
-
-- Ride infrastructure
-  - Upload picture daily of what student looks like + profile pic
-  - On ride request, constantly ping location of student and parent until arrival
-  - https://blog.maddevs.io/how-we-built-a-backend-system-for-uber-like-map-with-animated-cars-on-it-using-go-29d5dcd517a#.e6gl7i54p
-
-- Dashboards
-  - Parent
-  - Student
-  
-- First-time registration
-  - Parents need to be registered
-  - Important photos
-    - Face, ID, License plate, Car, etc.
+- Call Google APIs to draw out route on rideDetails.ejs
+- Student needs to upload current picture...add a card to the dashboard
+- Calculate miles based on all child's negative miles, and parents positive miles.
+- Report Link on Parent Dashboard showing all the rides his or her children has taken, how many miles does he need to pay, and how much money he will get based on miles at the end of the month.
+- Clean and proper UI
+- Nice Error Page; Scrap some Error templates off of Dribble or MaterialUp XD.
+- Beautify Powerpoint 
+- Upload to Devpost
+- Rehearse presentation (Convey main points with much emotion. Create a feeling that this problem NEEDS to be solved.)

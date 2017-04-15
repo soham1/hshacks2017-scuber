@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/head %>
+  <body>
+    <h1>Parents</h1>
+    <ul>
+    <% for (var i = 0; i < pres.length; i++) {%>
+      <li><%= pres[i].id %> - <%= pres[i].rating %></li>
+    <% }%>
+    </ul>
+    <h1>Students</h1>
+    <ul>
+    <% for (var i = 0; i < sres.length; i++) {%>
+      <li><%= sres[i].id %> - <%= sres[i].rating %></li>
+    <% }%>
+    </ul>
+  </body>
+  <% include ../partials/footer %>
+</html>

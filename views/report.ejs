@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/head %>
+  <body>
+    <% if (trips.length == 0) {%>
+      <p>Empty</p>
+    <% }%>
+    <!-- No pretty pretty for now cause lazy -->
+    <% for (var i = 0; i < trips.length; i++) {%>
+      <p><%= trips[i] %></p>
+    <% }%>
+    
+    <% if (routes.length == 0) {%>
+      <h1>Empty</h1>
+    <% }%>
+    <% for (var i = 0; i < routes.length; i++) {%>
+      <h1><%= routes[i] %></h1>
+    <% }%>
+  </body>
+  <% include ../partials/footer %>
+</html>

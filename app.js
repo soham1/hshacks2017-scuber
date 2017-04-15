@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var useragent = require('useragent');
 var index = require('./routes/index');
 var mongoose = require('mongoose');
+var matchmaker = require('./matchmaker');
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/uberSchool");
@@ -42,6 +43,9 @@ app.use(function(req, res, next) {
   } 
   next();
 });
+
+app.on('event:requestRide', matchmaker.requestRide);
+app.on('event:findStudent', matchmaker.findStudent);
 
 app.use('/', index);
 
