@@ -45,7 +45,7 @@
           </div>
           <div class="card-action">
             <% if (sumParent >= sumChild) {%>
-              <a class="waves-effect waves-light btn" href="/redeemMiles/<%= trips[0].parentId._id.toString() %>">Redeem points</a>
+              <a class="waves-effect waves-light btn" href="/redeemMiles/<%= pid %>">Redeem points</a>
             <% } else {%>
               <a class="disabled waves-effect waves-light btn">Redeem points</a>
             <% }%>

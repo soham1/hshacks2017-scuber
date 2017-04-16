@@ -50,6 +50,7 @@ function reportHandler(req, res, next) {
           sumParent: etc,
           sumChild: sumChild,
           trips: trips,
+          pid: req.session.parent._id.toString(),
           routes: tripRoutes
         });
       });
