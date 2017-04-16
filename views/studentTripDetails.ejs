@@ -50,17 +50,22 @@
             </div>
             
             <% for (var i = 0; i < studentTripRouteArray.length; i++) {%>
-            <div class="card hoverable green lighten-3">
-              <div class="card-content">
-                <span class="card-title">Student #<%=studentTripRouteArray[i].tripRoute.stopOrder%></span>
-                <p>Name: <%=studentTripRouteArray[i].student.name%></p>
+            <div class="card hoverable green lighten-3 horizontal">
+              <div class="card-image">
+                <img src="<%= studentTripRouteArray[i].student.photo %>">
               </div>
-              <div class="card-action">
-                <% if (studentTripRouteArray[i].tripRoute.studentRating == 0) {%>
-                  <a class="waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[i].tripRoute._id%>/<%=studentTripRouteArray[i].tripRoute.destination%>">Rate</a>
-                <% } else {%>
-                  <a class="disabled waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[i].tripRoute._id%>/<%=studentTripRouteArray[i].tripRoute.destination%>">Rate</a>
-                <% }%>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <span class="card-title">Student #<%=studentTripRouteArray[i].tripRoute.stopOrder%></span>
+                  <p>Name: <%=studentTripRouteArray[i].student.name%></p>
+                </div>
+                <div class="card-action">
+                  <% if (studentTripRouteArray[i].tripRoute.studentRating == 0) {%>
+                    <a class="waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[i].tripRoute._id%>/<%=studentTripRouteArray[i].tripRoute.destination%>">Rate</a>
+                  <% } else {%>
+                    <a class="disabled waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[i].tripRoute._id%>/<%=studentTripRouteArray[i].tripRoute.destination%>">Rate</a>
+                  <% }%>
+                </div>
               </div>
             </div>
             <% }%>

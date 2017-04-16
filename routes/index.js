@@ -711,7 +711,11 @@ router.post('/rateStudent', function(req, res, next) {
       .then(function(matrix) {
         console.log("UPDATING TRIP ROUTE ID", req.params.tripRouteId);
         var distance = metersToMiles(matrix.rows[0].elements[0].distance.value);
-        TripRoute.update({_id: mongoose.Types.ObjectId(req.params.tripRouteId)}, {distance: distance, isDone: true}, function(err) {
+        TripRoute.update({
+          _id: mongoose.Types.ObjectId(req.params.tripRouteId)
+        }, {
+          $set: { distance: distance, isDone: true }
+        }, function(err) {
           if (err) {
             console.log("ERROR", err);
           }

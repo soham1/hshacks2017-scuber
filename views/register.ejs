@@ -1,76 +1,76 @@
 <!DOCTYPE html>
 <html>
   <% include ../partials/head %>
-  <body class="cyan">
+  <link href="/stylesheets/login.css" type="text/css" rel="stylesheet">
+  <body class="red lighten-3">
     <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
       <form class="login-form" method="POST" action="/register">
         <div class="row">
           <div class="input-field col s12 center">
-            <img src="http://demo.geekslabs.com/materialize-v1.0/images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login">
-            <p class="center login-form-text">Register</p>
+            <h4 class="center login-form-text">Register</h4>
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
             <i class="material-icons prefix">account_circle</i>
-            <input id="username" value="s" name="username" type="text" class="validate">
+            <input id="username" value="soham" name="username" type="text" class="validate">
             <label for="username">User Name</label>          
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
             <i class="material-icons prefix">lock_outline</i>
-            <input name="password" id="password" value="s" type="password">
+            <input name="password" id="password" value="soham" type="password">
             <label for="password">Password</label>
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
             <i class="material-icons prefix">account_circle</i>
-            <input id="name" name="name" value="s" type="text" class="validate">
+            <input id="name" name="name" value="Soham Ashodiya" type="text" class="validate">
             <label for="name">Full Name</label>          
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
             <i class="material-icons prefix">account_balance</i>
-            <input id="schoolName" name="schoolName" value="s" type="text" class="validate">
+            <input id="schoolName" name="schoolName" value="American High School" type="text" class="validate">
             <label for="schoolName">School Name</label>          
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <i class="material-icons prefix">link</i>
-            <input id="photo" name="photo" value="s" type="text" class="validate">
+            <i class="material-icons prefix">insert_photo</i>
+            <input id="photo" name="photo" value="data:image/jpeg;base64,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" type="text" class="validate">
             <label for="photo">Photo</label>          
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <i class="material-icons prefix">link</i>
+            <i class="material-icons prefix">school</i>
             <input id="schoolAddress" name="schoolAddress" value="American High School, Fremont Boulevard, Fremont, CA" type="text" class="validate">
             <label for="schoolAddress">School Address</label>          
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <i class="material-icons prefix">link</i>
+            <i class="material-icons prefix">home</i>
             <input id="homeAddress" name="homeAddress" value="3107 Salisbury Court, Fremont, CA" type="text" class="validate">
             <label for="homeAddress">Home Address</label>          
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <i class="material-icons prefix">account_circle</i>
-            <input id="email" name="email" type="email" value="s@s" class="validate">
+            <i class="material-icons prefix">email</i>
+            <input id="email" name="email" type="email" value="sohamashodiya@gmail.com" class="validate">
             <label for="email">Email</label>          
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <i class="material-icons prefix">account_circle</i>
-            <input id="phone" name="phone" type="tel" value="1" class="validate">
+            <i class="material-icons prefix">phone</i>
+            <input id="phone" name="phone" type="tel" value="5103243100" class="validate">
             <label for="phone">Phone</label>          
           </div>
         </div>
