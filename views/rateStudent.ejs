@@ -61,7 +61,7 @@
                 </form>
               </div>
               <div class="card-action">
-                <a class="waves-effect waves-light btn red-lighten-2" type="submit" name="action">
+                <a class="waves-effect waves-light btn red-lighten-2" type="submit" name="act" id="act">
                   <span>Submit Rating</span>
                 </a>
               </div>
@@ -72,5 +72,14 @@
       </div>
     </div>
     <% include ../partials/footer %>
+    
+    <script>
+      $(function () {
+        $('#act').click(function(ev) {
+          console.log("oncl");
+          $('#ratings').submit();
+        });
+      });
+    </script>
   </body>
 </html>

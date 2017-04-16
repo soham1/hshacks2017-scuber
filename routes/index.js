@@ -711,7 +711,7 @@ router.post('/rateStudent', function(req, res, next) {
       .then(function(matrix) {
         console.log("UPDATING TRIP ROUTE ID", req.params.tripRouteId);
         var distance = metersToMiles(matrix.rows[0].elements[0].distance.value);
-        TripRoute.update({_id: req.params.tripRouteId}, {distance: distance, isDone: true}, function(err) {
+        TripRoute.update({_id: mongoose.Types.ObjectId(req.params.tripRouteId)}, {distance: distance, isDone: true}, function(err) {
           if (err) {
             console.log("ERROR", err);
           }
@@ -861,6 +861,57 @@ router.get('/rankings', function (req, res, next) {
       });
     })(req, res, next);
   })(req, res, next);
+});
+
+router.get('/redeemMiles/:pid', function (req, res, next) {
+  
+  function go(arr, index, cb) {
+    if (index < arr.length) {
+      var sid = mongoose.Types.ObjectId(arr[index]._id)
+      Student.update({ _id: sid }, { miles: 0 }, {}, function (err, raw) {
+        if (err) {
+          cb(err)
+        } else {
+          go(arr, index + 1, cb);
+        }
+      });
+    } else {
+      cb();
+    }
+  }
+  
+  console.log("Redeeming miles");
+  var pid = req.params.pid;
+  Student.find({}).exec(function (err, students) {
+    if (err) {
+      console.log("err", err);
+    } else {
+      students.filter(function (x) {
+        x.motherId === mongoose.Types.ObjectId(pid) || x.fatherId === mongoose.Types.ObjectId(pid);
+      });
+      
+      var t = 0
+      for (var i = 0; i < students.length; i++) {
+        t += students[i].miles
+      }
+      
+      go(students, 0, function(err) {
+        if (err) {
+          console.log("err", err);
+        } else {
+          Parent.findOne({ _id: mongoose.Types.ObjectId(pid) }, function(err, parent) {
+            if (err || !parent) {
+              console.log("err || !parent");
+            } else {
+              Parent.update({ _id: mongoose.Types.ObjectId(pid) }, { miles: parent.miles - t }, {}, function(err, raw) {
+                res.redirect("/report");
+              })
+            }
+          })
+        }
+      });
+    }
+  });
 });
 
 function metersToMiles(i) {

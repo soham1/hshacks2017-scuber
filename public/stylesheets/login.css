@@ -39,3 +39,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.card-panel {
+    padding: 25px !important;
+}

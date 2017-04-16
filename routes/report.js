@@ -17,33 +17,43 @@ function reportHandler(req, res, next) {
   var routes = [];
   
   function tripsCallback(err, trips) {
+    var etc = 0;
+    for (var x = 0; x < trips.length; x++) {
+      etc += trips[x].parentId.miles;
+    }
+    
+    console.log("trips", trips);
     if (err) {
       console.log(err);
     } else {
       var trips = trips;
-      TripRoute.find({}).populate('studentId').find({ 'studentId.fatherId': mongoose.Types.ObjectId(req.session.parent._id.toString()) }).exec(function(err, tripRoute){
-        if(err){
+      TripRoute.find({}).populate('studentId tripId').exec(function(err, tripRoutes) {
+        if(err) {
           console.log("ERROR", err);
         } else {
-          routesCallback(tripRoute);
-          TripRoute.find({}).populate('studentId').find({ 'studentId.motherId': mongoose.Types.ObjectId(req.session.parent._id.toString()) }).exec(function(err, tripRoute){
-            if(err){
-              console.log("ERROR", err);
-            } else {
-              routesCallback(tripRoute);
-            }
+          tripRoutes.filter(function (x) {
+            var pid = mongoose.Types.ObjectId(req.session.parent._id.toString());
+            return x.studentId.fatherId === pid || x.studentId.motherId === pid;
           });
+          
+          console.log("trs", tripRoutes);
         }
-      });
-      res.render('report', {
-        trips: trips,
-        routes: routes
+        
+        var sumChild = 0;
+        
+        for (var i = 0; i < tripRoutes.length; i++) {
+          // console.log("su", tripRoutes[i].distance);
+          sumChild += tripRoutes[i].distance;
+        }
+        
+        res.render('report', {
+          sumParent: etc,
+          sumChild: sumChild,
+          trips: trips,
+          routes: tripRoutes
+        });
       });
     }
-  }
-  
-  function routesCallback(rs) {
-      routes += rs;
   }
   
   // Assume we're logged in. If not, panic
@@ -52,6 +62,7 @@ function reportHandler(req, res, next) {
   }
   
   Trip.find({ parentId: mongoose.Types.ObjectId(req.session.parent._id.toString()) })
+    .populate('parentId')
     .sort({ tripDate: 'desc' })
     .exec(tripsCallback);
 }
@@ -59,8 +70,16 @@ function reportHandler(req, res, next) {
 function parentRating(pid, trCallback) {
   
   TripRoute.find({}).populate("tripId")
-    .find({ 'tripId.parentId': pid })
-    .exec(trCallback);
+    .exec(function (err, trs) {
+      if (err) {
+        trCallback(err, null);
+      } else {
+        trs.filter(function (x) {
+          x.tripId.parentId === pid
+        });
+        trCallback(null, trs);
+      }
+    });
 }
 
 function studentRating(sid, trCallback) {
@@ -188,12 +207,12 @@ function prHandler(req, res, next, callback) {
       console.log("test", ps);
       for (var i = 0; i < ps.length; i++) {
         ps[i] = {'id': ps[i]._id, 'name': ps[i].name};
+        
       }
+      console.log("test", ps);
       
       go(ps, 0, [], function (pres) {
         console.log("grapes");
-        
-        console.log("typeof", typeof(pres))
         
         pres.sort(function(a, b) {
           return b.rating - a.rating;
