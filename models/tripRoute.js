@@ -12,8 +12,8 @@ var TripRoute = new Schema({
    longitude: Number,
    isDone: Boolean,
    distance: Number,
-   parentRating: Number,
-   studentRating: Number
+   parentRating: {type: Number, default: 0},
+   studentRating: {type: Number, default: 0}
 
 });
 

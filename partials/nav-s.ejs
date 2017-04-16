@@ -5,23 +5,23 @@
           <div class="background">
             <img src="http://materializecss.com/images/office.jpg">
           </div>
-          <a href="#!user"><img class="circle" src="<%= student.photo %>"></a>
-          <a href="#!name">
+          <a><img class="circle" src="<%= student.photo %>"></a>
+          <a>
             <span class="white-text name">
               <%= student.name %>
             </span>
           </a>
-          <a href="#!email">
+          <a>
             <span class="white-text email">
               <%= student.email %>
             </span>
           </a>
-          <a href="#!miles">
+          <a>
             <span class="white-text miles">
-              Miles: <%= student.miles %>
+              Miles used: <%= student.miles %>
             </span>
           </a>
-          <a href="#!rating">
+          <a>
             <span class="white-text rating">
               Rating: <%= rating %>
             </span>
@@ -29,5 +29,6 @@
         </div>
       </li>
       <li><a href="/register-parent">Register Parent</a></li>
+      <li><a href="/rankings">Leaderboard</a></li>
       <li><a href="/logout">Log out</a></li>
     </ul>

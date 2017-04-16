@@ -1,13 +1,87 @@
 <html>
   <% include ../partials/head %>
-  <body class="container">
-    Thanks for being available. You will receive a push notification if there is a student requesting a ride.
-    <a class="waves-effect waves-light btn pulse" href="/notAvailable">Cancel Availability</a>
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a class="page-title">Drive Queue</a>
+          </div>
+        </div>
+      </nav>
+      <style>
+        html {
+          background-image: url("/images/pattern.png");
+        }
+        
+        .top-nav {
+          height: 84px;
+        }
+        
+        nav {
+          color: #fff;
+          background-color: #ee6e73;
+          width: 100%;
+        }
+        
+        .page-title {
+          font-size: 32px;
+          line-height: 84px;
+        }
+      </style>
+    </header> 
+    <div class="container">
+      <div class="row">
+        <div style="display: flex; align-items: center">
+          <div class="col s2"></div>
+          <div class="col s8">
+            <div class="card hoverable">
+              <div class="card-image">
+                <img src="/images/carLoading.gif">
+              </div>
+              <div class="card-content">
+                <span class="card-title">Please wait</span>
+                <p>Thanks for being available. You will receive a push notification if there is a student requesting a ride.</p>
+                <p>If you would like to stop being available for a ride, you can cancel your availability <em>before</em> a student requests a ride.</p>
+              </div>
+              <div class="card-action">
+                <a href="/notAvailable">Cancel Availability</a>
+              </div>
+            </div>
+          </div>
+          <div class="col s2"></div>
+        </div>
+      </div>
+      <% include ../partials/footer %>
+      <script>
+        
+        //Parent Id comes from ejs.     
+        function checkStudentFound(parentId, totalKids) {
+          console.log("PARENT ID IS IN CHECK STUDENT FOUND", parentId);
+          $.ajax({
+            url: "/studentFound/" + parentId
+          }).done(function( data ) {
+            if(data.found && data.totalKids > totalKids){
+              console.log("Done!");
+              window.location.href="/studentTripDetails/" + data.tripId;
+            } else {
+              console.log("Pinging");
+              setTimeout(function() {
+                checkStudentFound(parentId, totalKids)
+              }, 2000);
+            }
+          });
+        }
+        
+        var parentId = "<%= parentId %>";
+        console.log("PARENT ID IN THANKS", parentId);
+        var totalKids = 0;
+        setTimeout(function() {
+          checkStudentFound(parentId, totalKids)
+        }, 2000);
+      </script>
+    </div>
+    
     <% include ../partials/footer %>
-    <script>
-      var parentId = "<%=parentId%>";
-      var totalKids = 0;
-    </script>
-    <script src="/javascripts/checkStudentFound.js"></script>
   </body>
 </html>

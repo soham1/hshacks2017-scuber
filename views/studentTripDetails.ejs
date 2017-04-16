@@ -1,20 +1,74 @@
 <html>
   <% include ../partials/head %>
-  <body class="container">
-    <!-- 1st Student Details -->
-    <div>
-      <%=studentTripRouteArray[0].student.name%>
-      <%=studentTripRouteArray[0].tripRoute.stopOrder%>
-      <a id="loc" target=blank>Click me</a>
-      <a class="waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[0].tripRoute._id%>/<%=studentTripRouteArray[0].tripRoute.destination%>">Rate</a>
-   </div>
+  <body>
+    <header>
+      <nav class="top-nav">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a class="page-title">Trip Overview</a>
+          </div>
+        </div>
+      </nav>
+      <style>
+        html {
+          background-image: url("/images/pattern.png");
+        }
+        
+        .top-nav {
+          height: 84px;
+        }
+        
+        nav {
+          color: #fff;
+          background-color: #ee6e73;
+          width: 100%;
+        }
+        
+        .page-title {
+          font-size: 32px;
+          line-height: 84px;
+        }
+      </style>
+    </header> 
+    <div class="container">
+      <div class="row">
+        <div style="display: flex; align-items: center">
+          <div class="col s2"></div>
+          <div class="col s8">
+            <!-- Google maps thing -->
+            <div class="card amber lighten-2">
+              <div class="card-content">
+                <span class="card-title">Route information</span>
+                <p><strong>A trip is currently in progress.</strong></p>
+                <p>You are currently driving <strong><%= studentTripRouteArray.length %> students</strong>.</p>
+                <p>Once you are done delivering a student, you may rate them. (Note that you cannot re-rate a student)</p>
+                <p>This page will automatically and periodically refresh to check for new students.</p>
+              </div>
+              <div class="card-action">
+                <a class="waves-effect waves-light btn orange lighten-1" id="loc" target=blank>Get route via Google Maps</a>
+              </div>
+            </div>
+            
+            <% for (var i = 0; i < studentTripRouteArray.length; i++) {%>
+            <div class="card hoverable green lighten-3">
+              <div class="card-content">
+                <span class="card-title">Student #<%=studentTripRouteArray[i].tripRoute.stopOrder%></span>
+                <p>Name: <%=studentTripRouteArray[i].student.name%></p>
+              </div>
+              <div class="card-action">
+                <% if (studentTripRouteArray[i].tripRoute.studentRating == 0) {%>
+                  <a class="waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[i].tripRoute._id%>/<%=studentTripRouteArray[i].tripRoute.destination%>">Rate</a>
+                <% } else {%>
+                  <a class="disabled waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[i].tripRoute._id%>/<%=studentTripRouteArray[i].tripRoute.destination%>">Rate</a>
+                <% }%>
+              </div>
+            </div>
+            <% }%>
+          </div>
+          <div class="col s2"></div>
+        </div>
+      </div>
     
-    <!-- Coming Soon Student Details -->
-    <% for (var i = 1; i < studentTripRouteArray.length; i++) {%>
-      <%=studentTripRouteArray[i].student.name%>
-      <%=studentTripRouteArray[i].tripRoute.stopOrder%>
-      <a class="waves-effect waves-light btn" href="/rateStudent/<%=studentTripRouteArray[i].tripRoute._id%>/<%=studentTripRouteArray[i].tripRoute.destination%>">Rate</a>
-    <% } %>
     <% include ../partials/footer %>
     <script>
       var parentId = "<%=parentId%>";
@@ -40,7 +94,31 @@
         }
         $("#loc").attr('href', address) ;
       });
+      
+      //Parent Id comes from ejs.     
+      function checkStudentFound(parentId, totalKids) {
+        console.log("PARENT ID IS IN CHECK STUDENT FOUND", parentId);
+        $.ajax({
+          url: "/studentFound/" + parentId
+        }).done(function( data ) {
+          if(data.found && data.totalKids > totalKids){
+            console.log("Done!");
+            window.location.href="/studentTripDetails/" + data.tripId;
+          } else {
+            console.log("Pinging");
+            setTimeout(function() {
+              checkStudentFound(parentId, totalKids)
+            }, 15000);
+          }
+        });
+      }
+      
+      var parentId = "<%= parentId %>";
+      console.log("PARENT ID IN THANKS", parentId);
+      var totalKids = 0;
+      setTimeout(function() {
+        checkStudentFound(parentId, totalKids)
+      }, 15000);
     </script>
-    <script src="/javascripts/checkStudentFound.js"></script>
   </body>
 </html>

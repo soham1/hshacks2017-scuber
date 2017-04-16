@@ -12,9 +12,8 @@ footer {
   }
 }
 
-nav.top-nav {
-  height: 78px;
-  box-shadow: none;
+.top-nav {
+  height: 122px;
 }
 
 nav {
@@ -26,8 +25,8 @@ nav {
 }
 
 .page-title {
-  font-size: 40px;
-  line-height: 78px;
+  font-size: 48px;
+  line-height: 122px;
 }
 
 

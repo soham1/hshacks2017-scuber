@@ -52,9 +52,9 @@ router.get('/', function(req, res, next) {
 //Parent is available, updates status, and emits to matchmaker findStudent method
 router.get('/available/:lat/:long', function(req, res, next) {
   Parent.update({
-    _id: req.session.parent._id,
-    latitude: req.param("lat"),
-    longitude: req.param("long")
+    _id: mongoose.Types.ObjectId(req.session.parent._id.toString()),
+    latitude: req.params.lat,
+    longitude: req.params.long
   }, {
     $set: {
       available: true
@@ -64,6 +64,7 @@ router.get('/available/:lat/:long', function(req, res, next) {
     req.app.emit('event:findStudent', {
       parent: req.session.parent
     });
+    console.log('PARENT ID GIVEN TO THANKS FOR AVAILABLE', req.session.parent);
     res.render('thanksForAvailable.ejs', {
       parentId: req.session.parent._id
     });
@@ -77,6 +78,7 @@ router.get('/register', function(req, res, next) {
 
 //Student wants a ride, emits to matchmaker.js requestRide method.
 router.get('/findRide', function(req, res, next) {
+  console.log("INSIDE FIND RIDE");
   Student.update({
     _id: req.session.student._id
   }, {
@@ -84,6 +86,7 @@ router.get('/findRide', function(req, res, next) {
       waitingForRide: true
     }
   }, function() {
+    console.log("EMMITITIG REQUEST RIDE");
     req.app.emit('event:requestRide', {
       student: req.session.student
     });
@@ -131,14 +134,15 @@ router.post('/register-parent', function(req, res, next) {
 
   user.save(function(err) {
     if (err) {
-      return ("ERROR IN USER", err);
+      console.log("error in saving user");
+      res.redirect("/");
     }
     else {
       req.session.user = user;
       var parent = new Parent({
         userId: mongoose.Types.ObjectId(user._id.toString()),
         phone: req.body.phone,
-        carImage: req.body.carImage,
+        carPhoto: req.body.carPhoto,
         carMakeModel: req.body.carMakeModel,
         licensePlate: req.body.licensePlate,
         photo: req.body.photo,
@@ -153,6 +157,7 @@ router.post('/register-parent', function(req, res, next) {
           return ("ERROR", err);
         }
         else {
+          req.session.parent = updatedParent;
           if (req.body.relation == "father") {
             Student.findById(req.session.student._id, function(err, student) {
               if (err) {
@@ -303,7 +308,7 @@ router.post('/login', function(req, res, next) {
 
 // Responds to thanksForAskingRide.ejs AJAX requests, every 2 seconds until driver is found. 
 router.get('/rideFound/:studentId', function(req, res, next) {
-  console.log("FINDING ROUTE USING PARAM", req.param.studentId);
+  console.log("FINDING ROUTE USING PARAM", req.params.studentId);
   TripRoute.findOne({
     studentId: req.params.studentId
   }, function(err, tripRoute) {
@@ -333,7 +338,7 @@ router.get('/rideFound/:studentId', function(req, res, next) {
 // Ride Details route, shows parent and ride details. Called from thanksForAskingRide.ejs every 2 seconds.
 router.get('/rideDetails/:tripId', function(req, res, next) {
   console.log("TRIP ID IN RIDE DETAILS", req.params.tripId);
-  Trip.findById(req.params.tripId, function(err, trip) {
+  Trip.findById(mongoose.Types.ObjectId(req.params.tripId.toString()), function(err, trip) {
     if (err) {
       console.log("ERROR", err);
     }
@@ -344,13 +349,15 @@ router.get('/rideDetails/:tripId', function(req, res, next) {
         }
         else {
           TripRoute.findOne({
-            tripId: req.params.tripId,
+            tripId: mongoose.Types.ObjectId(req.params.tripId.toString()),
             studentId: req.session.student._id
           }, function(err, tripRoute) {
             if (err) {
               console.log("ERROR", err);
             }
             else {
+              console.log("TRIP ROUTE ID IN RIDE DETAILS", tripRoute._id);
+              console.log("PARENT IMAGE URL PLS", parent.carPhoto);
               res.render('rideDetails', {
                 parent: parent,
                 trip: trip,
@@ -369,7 +376,8 @@ router.get('/rideDetails/:tripId', function(req, res, next) {
 router.get('/studentTripDetails/:tripId', function(req, res, next) {
   console.log('TRIP ID', req.params.tripId);
   TripRoute.find({
-    tripId: req.params.tripId
+    tripId: req.params.tripId,
+    isDone: false
   }, null, {
     sort: {
       stopOrder: -1
@@ -404,7 +412,7 @@ router.get('/studentTripDetails/:tripId', function(req, res, next) {
 
           res.render('studentTripDetails', {
             studentTripRouteArray: studentTripRouteArray,
-            parentId: req.session.parent._id
+            parentId: mongoose.Types.ObjectId(req.session.parent._id.toString())
           });
         }
       });
@@ -414,16 +422,22 @@ router.get('/studentTripDetails/:tripId', function(req, res, next) {
 
 // Pinged by thanksForAvailable.ejs every 2 seconds. 
 router.get('/studentFound/:parentId', function(req, res, next) {
+  console.log("parentId", req.params.parentId);
   Trip.findOne({
     isDone: false,
-    parentId: req.params.parentId
+    parentId: mongoose.Types.ObjectId(req.params.parentId.toString())
   }, function(err, trip) {
-    if (err) {
+    if (err || !trip) {
       console.log("ERROR", err);
+      console.log("FUCKFUCKUFKC", trip);
+      res.json({
+        found: false
+      });
     }
     else {
+      console.log("TRIP ID IN STUDENT FOUND", trip._id);
       TripRoute.find({
-          tripId: trip._id,
+          tripId: mongoose.Types.ObjectId(trip._id.toString()),
           isDone: false
         }, null, {
           sort: {
@@ -533,27 +547,41 @@ router.get('/dashboard', function(req, res, next) {
 
           report.studentRating(mongoose.Types.ObjectId(req.session.student._id.toString()), function(err, trs) {
             var avg = null;
+            var acc = [];
             console.log("etc", trs);
             if (err) {
               console.log("panic", err);
             }
             else {
               for (var i = 0; i < trs.length; i++) {
-                trs[i] = trs[i].parentId;
+                console.log("trs", trs);
+                acc[i] = trs[i].studentRating;
               }
-              console.log("etc", trs);
-              var sum = trs.reduce(function(a, b) {
+              
+              console.log("etc", acc);
+              
+              var sum = acc.reduce(function(a, b) {
                 return a + b;
               }, 0);
-              avg = sum / (trs.length <= 0 ? 1 : trs.length);
+              
+              avg = sum / (acc.length <= 0 ? 1 : acc.length);
 
               console.log("rating", avg);
+            
+              report.recentRides(req, res, next, function (err, objs) {
+                if (err) {
+                  console.log("err", err);
+                } else {
+                  console.log("test", objs[0]);
+                  res.render('dashboard-s', {
+                    user: user,
+                    student: student,
+                    rating: avg,
+                    recent: objs
+                  });
+                }
+              });
             }
-            res.render('dashboard-s', {
-              user: user,
-              student: student,
-              rating: avg
-            });
           });
         }
       }
@@ -561,60 +589,60 @@ router.get('/dashboard', function(req, res, next) {
   }
 });
 
-router.get('/test/addStudentRoutes', function(req, res, next) {
-  var trip = new Trip({
-    tripDate: new Date(),
-    parentId: mongoose.Types.ObjectId("58f0ff1ce2d1ed1658e166bd"),
-    isDone: false
-  });
-  trip.save(function(err, updatedTrip) {
-    if (err) {
-      console.log("ERROR", err);
-    }
-    else {
-      var tripRoute1 = new TripRoute({
-        tripId: updatedTrip._id,
-        studentId: mongoose.Types.ObjectId("58e46b8f8fb8ec0ec12a0d06"),
-        stopOrder: 1,
-        destination: "Home",
-        longitude: -122.0298666,
-        latitude: 37.5786553,
-        isDone: false
-      });
-
-      var tripRoute2 = new TripRoute({
-        tripId: updatedTrip._id,
-        studentId: mongoose.Types.ObjectId("58f14ce637aadc1d917cc36f"),
-        stopOrder: 2,
-        destination: "Home",
-        longitude: -122.0298666,
-        latitude: 37.5786553,
-        isDone: false
-      });
-
-      tripRoute1.save(function(err) {
-        if (err) {
-          console.log("ERROR", err);
-        }
-        else {
-          tripRoute2.save(function(err) {
-            if (err) {
-              console.log("ERROR", err);
-            }
-            else {
-              res.json({
-                tripRoute1: tripRoute1,
-                tripRoute2: tripRoute2,
-                trip: updatedTrip
-              });
-            }
-          });
-        }
-      });
-    }
-  });
-
-});
+// router.get('/test/addStudentRoutes/:studentId1/:studentId2/:parentId', function(req, res, next) {
+//   var trip = new Trip({
+//     tripDate: new Date(),
+//     parentId: mongoose.Types.ObjectId(req.params.parentId.toString()),
+//     isDone: false
+//   });
+//   trip.save(function(err, updatedTrip) {
+//     if (err) {
+//       console.log("ERROR", err);
+//     }
+//     else {
+//       var tripRoute1 = new TripRoute({
+//         tripId: updatedTrip._id,
+//         studentId: mongoose.Types.ObjectId(req.params.studentId1.toString()),
+//         stopOrder: 1,
+//         destination: "Home",
+//         longitude: -122.0298666,
+//         latitude: 37.5786553,
+//         isDone: false
+//       });
+// 
+//       var tripRoute2 = new TripRoute({
+//         tripId: updatedTrip._id,
+//         studentId: mongoose.Types.ObjectId(req.params.studentId2.toString()),
+//         stopOrder: 2,
+//         destination: "Home",
+//         longitude: -122.0298666,
+//         latitude: 37.5786553,
+//         isDone: false
+//       });
+// 
+//       tripRoute1.save(function(err) {
+//         if (err) {
+//           console.log("ERROR", err);
+//         }
+//         else {
+//           tripRoute2.save(function(err) {
+//             if (err) {
+//               console.log("ERROR", err);
+//             }
+//             else {
+//               res.json({
+//                 tripRoute1: tripRoute1,
+//                 tripRoute2: tripRoute2,
+//                 trip: updatedTrip
+//               });
+//             }
+//           });
+//         }
+//       });
+//     }
+//   });
+// 
+// });
 
 router.get('/report', report.report);
 
@@ -637,73 +665,10 @@ router.get('/rateStudent/:tripRouteId/:destination', function(req, res, next) {
           console.log("ERROR", err);
         }
         else {
-          if (req.params.destination == "School") {
-            var options = {
-              uri: 'https://maps.googleapis.com/maps/api/distancematrix/json',
-              qs: {
-                key: 'AIzaSyAq3xxXpjgkz8RMNBApv1I4DSt2BMwpSWk',
-                units: "imperial",
-                origins: student.homeLat + "," + student.homeLong,
-                destinations: student.schoolLat + "," + student.schoolLong
-              },
-              headers: {
-                'User-Agent': 'Request-Promise'
-              },
-              json: true // Automatically parses the JSON string in the response
-            };
-          }
-          else {
-            var options = {
-              uri: 'https://maps.googleapis.com/maps/api/distancematrix/json',
-              qs: {
-                key: 'AIzaSyAq3xxXpjgkz8RMNBApv1I4DSt2BMwpSWk',
-                units: "imperial",
-                origins: student.schoolLat + "," + student.schoolLong,
-                destinations: student.homeLat + "," + student.homeLong
-              },
-              headers: {
-                'User-Agent': 'Request-Promise'
-              },
-              json: true // Automatically parses the JSON string in the response
-            };
-          }
-          rp(options)
-            .then(function(matrix) {
-              var distance = matrix.rows[0].elements[0].distance.value;
-              console.log("DISTANCE", distance);
-              tripRoute.totalDistance = distance;
-              TripRoute.save({_id: req.params.tripRouteId}, function(err, updatedTripRoute) {
-                if (err) {
-                  console.log("ERROR", err);
-                }
-                else {
-                  student.miles += distance;
-                  student.save(function(err, updatedStudent) {
-                    if (err) {
-                      console.log("ERROR", err);
-                    }
-                    else {
-                      var parent = req.session.parent;
-                      var totalMiles = parent.miles + distance;
-                      Parent.update({_id: parent._id}, {miles: totalMiles}, function(err){
-                        if (err) {
-                          console.log("ERROR", err);
-                        }
-                        else {
-                          res.render('rateStudent', {
-                            student: student,
-                            tripRoute: updatedTripRoute
-                          });
-                        }
-                      });
-                    }
-                  });
-                }
-              });
-            })
-            .catch(function(err) {
-              console.log("ERROR", err);
-            });
+          res.render('rateStudent', {
+            student: student,
+            tripRoute: tripRoute
+          });
         }
       });
     }
@@ -711,19 +676,85 @@ router.get('/rateStudent/:tripRouteId/:destination', function(req, res, next) {
 });
 
 router.post('/rateStudent', function(req, res, next) {
-  TripRoute.findById(req.body.tripRouteId, function(err, tripRoute) {
-    if (err) {
-      console.log("ERROR", err);
+  function go(req, res, next, student, cb) {
+    if (req.params.destination == "School") {
+      var options = {
+        uri: 'https://maps.googleapis.com/maps/api/distancematrix/json',
+        qs: {
+          key: 'AIzaSyAq3xxXpjgkz8RMNBApv1I4DSt2BMwpSWk',
+          units: "imperial",
+          origins: student.homeLat + "," + student.homeLong,
+          destinations: student.schoolLat + "," + student.schoolLong
+        },
+        headers: {
+          'User-Agent': 'Request-Promise'
+        },
+        json: true // Automatically parses the JSON string in the response
+      };
     }
     else {
-      TripRoute.update({_id: tripRoute._id}, {isDone: false, studentRating: req.body.star }, function(err) {
+      var options = {
+        uri: 'https://maps.googleapis.com/maps/api/distancematrix/json',
+        qs: {
+          key: 'AIzaSyAq3xxXpjgkz8RMNBApv1I4DSt2BMwpSWk',
+          units: "imperial",
+          origins: student.schoolLat + "," + student.schoolLong,
+          destinations: student.homeLat + "," + student.homeLong
+        },
+        headers: {
+          'User-Agent': 'Request-Promise'
+        },
+        json: true // Automatically parses the JSON string in the response
+      };
+    }
+    rp(options)
+      .then(function(matrix) {
+        console.log("UPDATING TRIP ROUTE ID", req.params.tripRouteId);
+        var distance = metersToMiles(matrix.rows[0].elements[0].distance.value);
+        TripRoute.update({_id: req.params.tripRouteId}, {distance: distance, isDone: true}, function(err) {
+          if (err) {
+            console.log("ERROR", err);
+          }
+          else {
+            student.miles += distance;
+            student.save(function(err, updatedStudent) {
+              if (err) {
+                console.log("ERROR", err);
+              }
+              else {
+                var parent = req.session.parent;
+                console.log("PARENT MILES", req.session.parent.miles);
+                var totalMiles = parent.miles + distance;
+                Parent.update({_id: parent._id}, {miles: totalMiles}, function(err){
+                  if (err) {
+                    console.log("ERROR", err);
+                  }
+                  else {
+                    cb();
+                  }
+                });
+              }
+            });
+          }
+        });
+      })
+      .catch(function(err) {
+        console.log("ERROR", err);
+      });
+  }
+  TripRoute.findById(req.body.tripRouteId, function(err, tripRoute) {
+    if (err) {
+      console.log("ERROR1", err);
+    }
+    else {
+      TripRoute.update({_id: req.body.tripRouteId}, {isDone: true, studentRating: req.body.star }, function(err) {
         if (err) {
-          console.log("ERROR", err);
+          console.log("ERROR2", err);
         }
         else {
           TripRoute.count({tripId: tripRoute.tripId, isDone: false}, function(err, count) {
             if (err) {
-              console.log("ERROR", err);
+              console.log("ERROR3", err);
             }
             else {
               if (count == 0) {
@@ -734,13 +765,34 @@ router.post('/rateStudent', function(req, res, next) {
                     console.log("ERROR", err);
                   }
                   else {
-                    res.redirect('/');
+                    Student.findById(mongoose.Types.ObjectId(req.body.studentId.toString()), function(err, student) {
+                      if (err) {
+                        console.log("err", err);
+                        res.redirect('/');
+                      } else {
+                        go(req, res, next, student, function() {
+                          res.redirect('/');
+                        });
+                      }
+                    });
                   }
                 });
               }
               else {
-                console.log("TRIP ROUTE", tripRoute);
-                res.redirect('/studentTripDetails/' + tripRoute.tripId);
+                Student.findById(mongoose.Types.ObjectId(req.body.studentId.toString()), function(err, student) {
+                  if (err) {
+                    console.log("err", err);
+                    console.log("TRIP ROUTE", tripRoute);
+                    res.redirect('/studentTripDetails/' + tripRoute.tripId);
+                    res.redirect('/');
+                  } else {
+                    go(req, res, next, student, function() {
+                      res.redirect('/');
+                      console.log("TRIP ROUTE", tripRoute);
+                      res.redirect('/studentTripDetails/' + tripRoute.tripId);
+                    });
+                  }
+                });
               }
             }
           });
@@ -751,22 +803,68 @@ router.post('/rateStudent', function(req, res, next) {
 });
 
 router.get('/rateParent/:tripId/:tripRouteId', function(req, res, next) {
-      
+  console.log("TRIP ID IN RP", req.params.tripId);
+  console.log("TRIP ROUTE ID IN RP", req.params.tripRouteId);
+  TripRoute.update({_id: req.params.tripRouteId}, {isDone: true}, function(err){
+    if(err){
+      console.log("ERROR", err);
+    } else {
+      TripRoute.count({tripId: req.params.tripId, isDone: false}, function(err, count){
+        if(err){
+          console.log("ERROR", err);
+        } else {
+          var tripDistance = 0;
+          if(count == 0){
+            TripRoute.find({tripId: req.params.tripId}, function(err, tripRoutes) {
+              if(err){
+                console.log("ERROR", err);
+              } else {
+                for(var i = 0; i < tripDistance.length; i++) {
+                  tripDistance += tripRoutes[i].miles;
+                }
+              }
+              Trip.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.tripId.toString()), {isDone: true, totalDistance: tripDistance}, function (err, trip) {
+                if(err){
+                  console.log("ERROR", err);
+                } else {
+                  res.render('rateParent', {trip: trip, tripRouteId: req.params.tripRouteId});
+                }
+              });
+            });
+          } else {
+            res.render('rateParent', {tripRouteId: req.params.tripRouteId});
+          }
+        }
+      });
+    }
+  });    
+});
+
+router.post('/rateParent', function(req, res, next) {
+   TripRoute.update({_id: req.body.tripRouteId}, {parentRating: req.body.star}, function(err){
+     if(err){
+       console.log("ERROR", err);
+     } else {
+       res.redirect('/dashboard');
+     }
+   }); 
 });
 
 router.get('/rankings', function (req, res, next) {
   console.log("rankings!");
   report.parentRankingHandler(function (pres) {
-    console.log("done with parents");
+    console.log("pres", pres);
     report.studentRankingHandler(function (sres) {
-      console.log("done with students");
       res.render('rankings', {
         pres: pres,
         sres: sres
       });
-    });
-  });
+    })(req, res, next);
+  })(req, res, next);
 });
 
+function metersToMiles(i) {
+  return i * 0.000621371192;
+}
 
 module.exports = router;

@@ -2,18 +2,91 @@
 <html>
   <% include ../partials/head %>
   <body>
-    <h1>Parents</h1>
-    <ul>
-    <% for (var i = 0; i < pres.length; i++) {%>
-      <li><%= pres[i].id %> - <%= pres[i].rating %></li>
-    <% }%>
-    </ul>
-    <h1>Students</h1>
-    <ul>
-    <% for (var i = 0; i < sres.length; i++) {%>
-      <li><%= sres[i].id %> - <%= sres[i].rating %></li>
-    <% }%>
-    </ul>
+    <header>
+      <nav class="top-nav">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a class="page-title">Rankings</a>
+          </div>
+        </div>
+      </nav>
+      <style>
+        html {
+          background-image: url("/images/pattern2.png");
+        }
+        
+        .top-nav {
+          height: 84px;
+        }
+        
+        nav {
+          color: #fff;
+          background-color: #ee6e73;
+          width: 100%;
+        }
+        
+        .page-title {
+          font-size: 32px;
+          line-height: 84px;
+        }
+        
+      </style>
+    </header>
+    
+    <div class="container">
+      <div class="row">
+        <div>
+          <div class="col s12">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title grey-text text-darken-4">Top Parents</span>
+                <table class="striped responsive">
+                  <thead>
+                    <tr>
+                      <th>Parent Name</th>
+                      <th>Ranking</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                    <% for (var x = 0; x < pres.length; x++) {%>
+                      <tr>
+                        <td><%= pres[x].name %></td>
+                        <td><%= pres[x].rating %></td>
+                      </tr>
+                     <% }%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col s12">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title grey-text text-darken-4">Top Students</span>
+                <table class="striped responsive">
+                  <thead>
+                    <tr>
+                      <th>Student Name</th>
+                      <th>Ranking</th>
+                    </tr>
+                  </thead>
+                  
+                  <tbody>
+                    <% for (var x = 0; x < sres.length; x++) {%>
+                      <tr>
+                        <td><%= sres[x].name %></td>
+                        <td><%= sres[x].rating %></td>
+                      </tr>
+                     <% }%>
+                  </tbody>
+                </table>
+              </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <% include ../partials/footer %>
 </html>

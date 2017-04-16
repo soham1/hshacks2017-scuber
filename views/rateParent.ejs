@@ -40,11 +40,9 @@
             <div class="card hoverable">
               <div class="card-content">
                 <span class="card-title">Rate this ride</span>
-                <p><strong>After student has arrived at his or her destination</strong>, please rate your student.</p>
-                <form id="ratings" method="POST" action="/rateStudent">
-                  <input type="hidden" name="tripRouteId" value="<%=tripRoute._id%>">
-                  <input type="hidden" name="destination" value="<%=student.destination%>">
-                  <input type="hidden" name="studentId" value="<%= student._id %>">
+                <p><strong>After you have arrived at your destination</strong>, please rate your driver.</p>
+                <form id="ratings" method="POST" action="/rateParent">
+                  <input type="hidden" name="tripRouteId" value="<%=tripRouteId%>">
                   <br />
                   <span>
                     <input name="star" type="radio" id="star-1" value="1" />

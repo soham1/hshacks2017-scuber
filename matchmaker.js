@@ -142,10 +142,11 @@ function createOrMatchTripP(studentArray, i, parent) {
     isDone: false
   }, function(err, trip) {
     if (err) {
-      return console.log("ERROR", err);
+      return console.log("ERRORF", err);
     }
     else {
       if (!trip) {
+        console.log("No trip exists (P)");
         var newTrip = new Trip({
           tripDate: new Date(),
           parentId: parent._id,
@@ -177,10 +178,11 @@ function createOrMatchTrip(parentArray, i, student) {
     isDone: false
   }, function(err, trip) {
     if (err) {
-      return console.log("ERROR", err);
+      return console.log("ERRORF", err);
     }
     else {
       if (!trip) {
+        console.log("No trip exists (P)");
         var newTrip = new Trip({
           tripDate: new Date(),
           parentId: parent._id,

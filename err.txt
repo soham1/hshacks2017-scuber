@@ -1,0 +1,110 @@
+Sat, 15 Apr 2017 05:18:43 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:19:12 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:19:36 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:19:36 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Sat, 15 Apr 2017 05:19:52 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:20:01 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:20:01 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:20:20 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:20:31 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:21:39 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:21:39 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:24:16 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:24:27 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:24:27 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:25:29 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:25:41 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:25:41 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:27:37 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:27:49 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:27:49 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:29:13 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:29:21 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:29:21 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:34:10 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:34:24 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:34:24 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:35:18 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:35:52 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:35:55 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:37:16 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:37:25 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:37:25 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:38:51 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:39:02 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:39:13 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:39:13 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Sat, 15 Apr 2017 05:42:05 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:42:19 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Sat, 15 Apr 2017 05:42:26 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:56:19
+Sat, 15 Apr 2017 05:42:26 GMT express deprecated req.param(name): Use req.params, req.body, or req.query instead at routes/index.js:57:20
+Mongoose: mpromise (mongoose's default promise library) is deprecated, plug in your own promise library instead: http://mongoosejs.com/docs/promises.html
+Error: Can't set headers after they are sent.
+    at ServerResponse.OutgoingMessage.setHeader (_http_outgoing.js:356:11)
+    at ServerResponse.header (/home/ubuntu/workspace/node_modules/express/lib/response.js:719:10)
+    at ServerResponse.send (/home/ubuntu/workspace/node_modules/express/lib/response.js:164:12)
+    at done (/home/ubuntu/workspace/node_modules/express/lib/response.js:956:10)
+    at tryHandleCache (/home/ubuntu/workspace/node_modules/ejs/lib/ejs.js:208:10)
+    at View.exports.renderFile [as engine] (/home/ubuntu/workspace/node_modules/ejs/lib/ejs.js:412:10)
+    at View.render (/home/ubuntu/workspace/node_modules/express/lib/view.js:126:8)
+    at tryRender (/home/ubuntu/workspace/node_modules/express/lib/application.js:639:10)
+    at EventEmitter.render (/home/ubuntu/workspace/node_modules/express/lib/application.js:591:3)
+    at ServerResponse.render (/home/ubuntu/workspace/node_modules/express/lib/response.js:960:7)
+    at /home/ubuntu/workspace/app.js:67:7
+    at Layer.handle_error (/home/ubuntu/workspace/node_modules/express/lib/router/layer.js:71:5)
+    at trim_prefix (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:310:13)
+    at /home/ubuntu/workspace/node_modules/express/lib/router/index.js:280:7
+    at Function.process_params (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:271:10)
+    at Layer.handle_error (/home/ubuntu/workspace/node_modules/express/lib/router/layer.js:67:12)
+    at trim_prefix (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:310:13)
+    at /home/ubuntu/workspace/node_modules/express/lib/router/index.js:280:7
+    at Function.process_params (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:271:10)
+    at /home/ubuntu/workspace/node_modules/express/lib/router/index.js:618:15
+    at IncomingMessage.next (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:256:14)
+    at done (/home/ubuntu/workspace/node_modules/express/lib/response.js:955:25)
+    at tryRender (/home/ubuntu/workspace/node_modules/express/lib/application.js:641:5)
+    at EventEmitter.render (/home/ubuntu/workspace/node_modules/express/lib/application.js:591:3)
+    at ServerResponse.render (/home/ubuntu/workspace/node_modules/express/lib/response.js:960:7)
+    at /home/ubuntu/workspace/routes/index.js:48:9
+Error: Can't set headers after they are sent.
+    at ServerResponse.OutgoingMessage.setHeader (_http_outgoing.js:356:11)
+    at ServerResponse.header (/home/ubuntu/workspace/node_modules/express/lib/response.js:719:10)
+    at ServerResponse.send (/home/ubuntu/workspace/node_modules/express/lib/response.js:164:12)
+    at done (/home/ubuntu/workspace/node_modules/express/lib/response.js:956:10)
+    at tryHandleCache (/home/ubuntu/workspace/node_modules/ejs/lib/ejs.js:208:10)
+    at View.exports.renderFile [as engine] (/home/ubuntu/workspace/node_modules/ejs/lib/ejs.js:412:10)
+    at View.render (/home/ubuntu/workspace/node_modules/express/lib/view.js:126:8)
+    at tryRender (/home/ubuntu/workspace/node_modules/express/lib/application.js:639:10)
+    at EventEmitter.render (/home/ubuntu/workspace/node_modules/express/lib/application.js:591:3)
+    at ServerResponse.render (/home/ubuntu/workspace/node_modules/express/lib/response.js:960:7)
+    at /home/ubuntu/workspace/app.js:67:7
+    at Layer.handle_error (/home/ubuntu/workspace/node_modules/express/lib/router/layer.js:71:5)
+    at trim_prefix (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:310:13)
+    at /home/ubuntu/workspace/node_modules/express/lib/router/index.js:280:7
+    at Function.process_params (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:271:10)
+    at Layer.handle_error (/home/ubuntu/workspace/node_modules/express/lib/router/layer.js:67:12)
+    at trim_prefix (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:310:13)
+    at /home/ubuntu/workspace/node_modules/express/lib/router/index.js:280:7
+    at Function.process_params (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:271:10)
+    at /home/ubuntu/workspace/node_modules/express/lib/router/index.js:618:15
+    at IncomingMessage.next (/home/ubuntu/workspace/node_modules/express/lib/router/index.js:256:14)
+    at done (/home/ubuntu/workspace/node_modules/express/lib/response.js:955:25)
+    at tryRender (/home/ubuntu/workspace/node_modules/express/lib/application.js:641:5)
+    at EventEmitter.render (/home/ubuntu/workspace/node_modules/express/lib/application.js:591:3)
+    at ServerResponse.render (/home/ubuntu/workspace/node_modules/express/lib/response.js:960:7)
+    at /home/ubuntu/workspace/routes/index.js:48:9
+Sat, 15 Apr 2017 05:44:35 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
