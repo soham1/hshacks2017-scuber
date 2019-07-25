@@ -2,6 +2,8 @@
 
 Ridesharing for students: safer, faster, cheaper.
 
+Winner of TinoHacks 2017.
+
 ## Why not use [insert Uber clone here]?
 
 As it is right now, school transport is flawed. Carpools are inefficient, public transport even more so, and traditional ridesharing services are expensive and lack the social aspect of a tight-knit school community.
