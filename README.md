@@ -1,4 +1,4 @@
-# Scuber 
+# Hackathon Scuber 
 
 Ridesharing for students: safer, faster, cheaper.
 
