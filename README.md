@@ -1,4 +1,4 @@
-# Hackathon Scuber 
+# Scuber 
 
 Ridesharing for students: safer, faster, cheaper.
 
@@ -18,7 +18,7 @@ Scuber is (usually) free for its users, making it an even more enticing choice f
 * MongoDB
 * Google Maps API
 
-## Submission
+## Hackathon Submission
 
 https://devpost.com/software/scuber
 
